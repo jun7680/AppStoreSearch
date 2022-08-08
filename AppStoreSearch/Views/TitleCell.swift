@@ -22,7 +22,7 @@ class TitleCell: UICollectionViewCell {
         return label
     }()
     
-    private installButton: UIButton = {
+    private let installButton: UIButton = {
         let button = UIButton()
         
         return button
