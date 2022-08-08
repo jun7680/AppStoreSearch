@@ -32,7 +32,7 @@ class SearchViewController: UIViewController {
         setNavigationController()
         setUI()
         setConstraints()
-        
+        setViewModelAction()
     }
     
     // navigation controller setting
@@ -58,6 +58,14 @@ class SearchViewController: UIViewController {
             searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             searchBar.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+    private func setViewModelAction() {
+        viewModel.successAction = { [weak self] dto in
+            DispatchQueue.main.async {
+                self?.navigationController?.pushViewController(LookUpViewController(), animated: true)                
+            }
+        }
     }
 }
 
