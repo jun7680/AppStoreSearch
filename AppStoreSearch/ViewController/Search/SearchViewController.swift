@@ -7,12 +7,14 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class SearchViewController: UIViewController {
+    
+    private let viewModel = SearchViewModel()
 
     private let searchBar: UISearchBar = {
         let searchBar = UISearchBar()
         searchBar.translatesAutoresizingMaskIntoConstraints = false
-        searchBar.placeholder = "검색어를 입력하세요."
+        searchBar.placeholder = "앱 ID를 입력하세요."
         searchBar.searchBarStyle = .prominent
         searchBar.sizeToFit()
         searchBar.isTranslucent = false
@@ -20,6 +22,7 @@ class ViewController: UIViewController {
         searchBar.searchTextField.layer.borderWidth = 1
         searchBar.searchTextField.clipsToBounds = true
         searchBar.searchTextField.layer.cornerRadius = 16
+        
         return searchBar
     }()
     
@@ -29,6 +32,7 @@ class ViewController: UIViewController {
         setNavigationController()
         setUI()
         setConstraints()
+        
     }
     
     // navigation controller setting
@@ -43,6 +47,7 @@ class ViewController: UIViewController {
     }
     
     private func setUI() {
+        searchBar.delegate = self
         view.addSubview(searchBar)
     }
     
@@ -56,3 +61,10 @@ class ViewController: UIViewController {
     }
 }
 
+
+extension SearchViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let appID = Int(searchBar.text ?? "") else { return }
+        viewModel.searchWithAppId(appID)
+    }
+}
