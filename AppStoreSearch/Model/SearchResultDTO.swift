@@ -21,9 +21,9 @@ struct Result: Codable {
     let artworkUrl100: String?
     let artistViewUrl: String?
     let supportedDevices: [String]?
-    let features: String?
+    let features: [String]?
     let isGameCenterEnabled: Bool?
-    let advisories: String?
+    let advisories: [String]?
     let kind: String?
     let artistId: Int?
     let artistName: String?
@@ -42,7 +42,7 @@ struct Result: Codable {
     let trackContentRating: String?
     let primaryGenreName: String?
     let primaryGenreId: Int?
-    let genreIds: [Int]?
+    let genreIds: [String]?
     let currentVersionReleaseDate: String?
     let releaseDate: String?
     let averageUserRating: Double?
