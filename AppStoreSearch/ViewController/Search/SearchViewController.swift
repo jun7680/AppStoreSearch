@@ -62,9 +62,8 @@ class SearchViewController: UIViewController {
     
     private func setViewModelAction() {
         viewModel.successAction = { [weak self] dto in
-            DispatchQueue.main.async {
-                self?.navigationController?.pushViewController(LookUpViewController(), animated: true)                
-            }
+            // TODO: - dto -> viewData로 넘겨주기
+            print(dto)
         }
     }
 }

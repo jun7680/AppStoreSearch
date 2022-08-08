@@ -23,7 +23,7 @@ class SearchViewModel: NSObject {
                 return
             }
             
-            if let action = self.action, let result = result {
+            if let action = self.successAction, let result = result {
                 action(result)
             }
         }
