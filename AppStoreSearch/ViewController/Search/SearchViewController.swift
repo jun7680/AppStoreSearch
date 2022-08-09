@@ -61,9 +61,14 @@ class SearchViewController: UIViewController {
     }
     
     private func setViewModelAction() {
-        viewModel.successAction = { [weak self] dto in
+        viewModel.successAction = { [weak self] detailData, appInfoTypes, screenShots in
             // TODO: - dto -> viewData로 넘겨주기
-            print(dto)
+            DispatchQueue.main.async {
+                self?.navigationController?.pushViewController(
+                    LookUpViewController(detail: detailData, appInfo: appInfoTypes, screenShots: screenShots),
+                    animated: true
+                )                
+            }
         }
     }
 }
