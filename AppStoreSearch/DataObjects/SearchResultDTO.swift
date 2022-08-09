@@ -9,10 +9,10 @@ import Foundation
 
 struct SearchResultDTO: Codable {
     let resultCount: Int?
-    let results: [Result]?
+    let results: [AppInfoDTO]?
 }
 
-struct Result: Codable {
+struct AppInfoDTO: Codable {
     let screenshotUrls: [String]?
     let ipadScreenshotUrls: [String]?
     let appletvScreenshotsUrls: [String]?
