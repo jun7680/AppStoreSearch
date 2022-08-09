@@ -14,6 +14,7 @@ class DetailInfoCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 13)
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -22,6 +23,7 @@ class DetailInfoCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 15)
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -30,13 +32,16 @@ class DetailInfoCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 13)
+        label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = .init(named: "person.crop.square")?.withTintColor(.gray)
+        imageView.image = UIImage(systemName: "person.crop.square")?.withRenderingMode(.alwaysTemplate)
+        imageView.tintColor = .gray
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
@@ -66,17 +71,26 @@ class DetailInfoCell: UICollectionViewCell {
     private func setConstraints() {
         NSLayoutConstraint.activate([
             centerLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            centerLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            centerLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            topLabel.bottomAnchor.constraint(equalTo: centerLabel.topAnchor, constant: 4),
+            centerLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+            topLabel.bottomAnchor.constraint(equalTo: centerLabel.topAnchor, constant: -4),
+            topLabel.bottomAnchor.constraint(equalTo: imageView.topAnchor, constant: -4),
+            topLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             topLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             topLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            
             bottomLabel.topAnchor.constraint(equalTo: centerLabel.bottomAnchor, constant: 4),
+            bottomLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4),
+            bottomLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             bottomLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             bottomLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            
             imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            imageView.widthAnchor.constraint(equalToConstant: 24),
-            imageView.heightAnchor.constraint(equalToConstant: 24)
+//            imageView.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 4),
+//            imageView.bottomAnchor.constraint(equalTo: bottomLabel.topAnchor, constant: -4),
+            imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            imageView.widthAnchor.constraint(equalToConstant: 30),
+            imageView.heightAnchor.constraint(equalToConstant: 30)
         ])
         
     }

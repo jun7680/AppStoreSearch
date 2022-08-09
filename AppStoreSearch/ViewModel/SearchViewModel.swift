@@ -33,6 +33,7 @@ class SearchViewModel: NSObject {
         }
     }
     
+    // 앱 상세 정보들
     private func buildAppInfoTypes(dto: AppInfoDTO) -> [AppInfoType] {
         let rating = AppInfoType.rating(
             count: dto.userRatingCount,
@@ -49,6 +50,7 @@ class SearchViewModel: NSObject {
         return [rating, advisory, ranking, developer, language]
     }
     
+    // 디테일 화면에서 보여줘야 하는 기본 정보들 뷰데이터로 변환
     private func buildDetail(dto: AppInfoDTO) -> DetailData {
         let appIconURL = URL(string: dto.artworkUrl512)
         
@@ -58,7 +60,8 @@ class SearchViewModel: NSObject {
             imageURL: appIconURL,
             version: dto.version,
             date: dto.releaseDate,
-            releaseNote: dto.releaseNotes
+            releaseNote: dto.releaseNotes,
+            description: dto.description
         )
     }
     

@@ -14,4 +14,5 @@ struct DetailData {
     let version: String
     let date: String
     let releaseNote: String
+    let description: String
 }

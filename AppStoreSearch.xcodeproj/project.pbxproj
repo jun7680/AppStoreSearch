@@ -33,6 +33,7 @@
 		66253A1B28A14A81008D95FD /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66253A1A28A14A81008D95FD /* SearchViewModel.swift */; };
 		66253A1F28A15615008D95FD /* LookUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66253A1E28A15615008D95FD /* LookUpViewController.swift */; };
 		66253A2228A15E4D008D95FD /* TitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66253A2128A15E4D008D95FD /* TitleCell.swift */; };
+		66807A8428A29B7C000A046F /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66807A8328A29B7C000A046F /* HeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		66253A1A28A14A81008D95FD /* SearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		66253A1E28A15615008D95FD /* LookUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LookUpViewController.swift; sourceTree = "<group>"; };
 		66253A2128A15E4D008D95FD /* TitleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleCell.swift; sourceTree = "<group>"; };
+		66807A8328A29B7C000A046F /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -278,6 +280,7 @@
 				57B7562328A21D5500CF0F53 /* DetailInfoCell.swift */,
 				57B7562A28A22A1400CF0F53 /* ScreenShotCell.swift */,
 				57B7563128A2302700CF0F53 /* DescriptionCell.swift */,
+				66807A8328A29B7C000A046F /* HeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -428,6 +431,7 @@
 				57B7562E28A22AE200CF0F53 /* UIImageViewExtension.swift in Sources */,
 				57B7563028A22B1E00CF0F53 /* ImageCache.swift in Sources */,
 				66253A1728A1456D008D95FD /* SearchService.swift in Sources */,
+				66807A8428A29B7C000A046F /* HeaderView.swift in Sources */,
 				66253A0D28A14095008D95FD /* APIType.swift in Sources */,
 				57B7562B28A22A1400CF0F53 /* ScreenShotCell.swift in Sources */,
 				66253A1128A14201008D95FD /* SessionManager.swift in Sources */,
