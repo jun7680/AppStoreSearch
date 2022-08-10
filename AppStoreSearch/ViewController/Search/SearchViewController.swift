@@ -17,7 +17,6 @@ class SearchViewController: UIViewController {
         searchBar.placeholder = "앱 ID를 입력하세요."
         searchBar.searchBarStyle = .prominent
         searchBar.sizeToFit()
-        searchBar.text = "872469884"
         searchBar.isTranslucent = false
         searchBar.backgroundImage = UIImage()
         searchBar.backgroundColor = .white
