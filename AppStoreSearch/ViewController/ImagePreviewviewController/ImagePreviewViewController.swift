@@ -23,6 +23,7 @@ class ImagePreviewViewController: UIViewController {
     
     init(url: [URL], selectIndex: Int) {
         self.url = url
+        self.selectIndex = selectIndex
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -37,6 +38,12 @@ class ImagePreviewViewController: UIViewController {
         setUI()
         setConstraints()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        view.layoutIfNeeded()
+        collectionView.scrollToItem(at: IndexPath(row: selectIndex, section: 0), at: .centeredHorizontally, animated: false)
     }
     
     private func setUI() {
@@ -56,13 +63,13 @@ class ImagePreviewViewController: UIViewController {
     
     private func createCollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] section, env -> NSCollectionLayoutSection? in
-            return self?.bannerSection()
+            return self?.screenShotSection()
         }
         
         return layout
     }
         
-    private func bannerSection() -> NSCollectionLayoutSection {
+    private func screenShotSection() -> NSCollectionLayoutSection {
         // section 아이템 사이즈
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
@@ -82,13 +89,6 @@ class ImagePreviewViewController: UIViewController {
             count: 1
         )
         let section = NSCollectionLayoutSection(group: group)
-        section.visibleItemsInvalidationHandler = { [weak self] visibleItems, offset, env in
-            if let selectIndex = self?.selectIndex, selectIndex != 0 {
-                let currentPage = Int(max(0, round(offset.x / env.container.contentSize.width * CGFloat(selectIndex))))
-                
-                self?.collectionView.setContentOffset(CGPoint(x: currentPage, y: 0), animated: false)
-            }
-        }
         section.orthogonalScrollingBehavior = .paging
         
         return section
