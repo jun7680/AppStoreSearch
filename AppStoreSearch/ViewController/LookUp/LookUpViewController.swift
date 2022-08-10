@@ -146,7 +146,7 @@ class LookUpViewController: UIViewController {
                 alignment: .topLeading
             )
         ]
-        section.orthogonalScrollingBehavior = .continuous
+        section.orthogonalScrollingBehavior = .paging
         section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
         return section
     }
