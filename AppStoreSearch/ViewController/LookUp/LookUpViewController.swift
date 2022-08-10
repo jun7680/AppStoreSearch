@@ -8,9 +8,11 @@
 import UIKit
 
 class LookUpViewController: UIViewController {
+    
     var detailData: DetailData
     var appInfo: [AppInfoType]
     var screenShots: [URL]
+    var installButtonPosition: CGFloat = 0
     
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
@@ -210,7 +212,7 @@ extension LookUpViewController: UICollectionViewDataSource {
                 for: indexPath
             ) as? TitleCell else { return .init() }
             cell.configure(item: detailData)
-            
+            installButtonPosition = cell.frame.maxY
             return cell
         case 1:
             guard let cell = collectionView.dequeueReusableCell(
@@ -270,6 +272,25 @@ extension LookUpViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 2 {
             self.present(ImagePreviewViewController(url: screenShots, selectIndex: indexPath.row), animated: true)
+        }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > installButtonPosition {
+            
+            let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 36, height: 36))
+            imageView.layer.borderWidth = 1
+            imageView.layer.borderColor = UIColor(white: 0.3, alpha: 0.3).cgColor
+            imageView.layer.cornerCurve = .continuous
+            imageView.layer.cornerRadius = 12
+            imageView.layer.masksToBounds = true
+            imageView.contentMode = .scaleAspectFit
+            if let url = detailData.imageURL {
+                imageView.setImage(url: url)
+            }
+            navigationItem.titleView = imageView
+        } else {
+            navigationItem.titleView = nil
         }
     }
 }

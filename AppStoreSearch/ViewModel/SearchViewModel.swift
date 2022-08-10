@@ -10,7 +10,9 @@ import Foundation
 class SearchViewModel: NSObject {
     private let searhService = SearchService()
     
-    var successAction: ((DetailData, [AppInfoType], [URL]) -> Void)?
+    var successAction: ((DetailData, [AppInfoType], [URL]) -> Void) = {_,_,_ in }
+    var errorAction: (() -> Void) = {}
+    var emptyAction: (() -> Void) = {}
     
     override init() {
         super.init()
@@ -19,16 +21,16 @@ class SearchViewModel: NSObject {
     func searchWithAppId(_ id: Int) {
         searhService.lookup(id: id) { [weak self] result, error in
             guard let self = self, error == nil else {
-                // TODO: - error handling
-                print(error)
+                self?.errorAction()
                 return
             }
-            
-            if let action = self.successAction, let result = result?.results.first {
+            if let result = result?.results.first {
                 let detail = self.buildDetail(dto: result)
                 let appInfoList = self.buildAppInfoTypes(dto: result)
                 let screenShots = self.buildScreenShots(dto: result)
-                action(detail, appInfoList, screenShots)
+                self.successAction(detail, appInfoList, screenShots)
+            } else {
+                self.emptyAction()
             }
         }
     }
