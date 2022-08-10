@@ -24,28 +24,29 @@ class SessionManager {
             completion(nil, NetworkError.invalidParam)
             return
         }
-        
-        self.session.dataTask(with: url) { data, response, error in
-            do {
-                let successRange = 200..<300
-                
-                let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
-                
-                if !successRange.contains(statusCode), let error = error {
-                    throw error
+        DispatchQueue.global(qos: .default).async {
+            self.session.dataTask(with: url) { data, response, error in
+                do {
+                    let successRange = 200..<300
+                    
+                    let statusCode = (response as? HTTPURLResponse)?.statusCode ?? -1
+                    
+                    if !successRange.contains(statusCode), let error = error {
+                        throw error
+                    }
+                    
+                    // 성공은 했지만 data가 비어있을때 error
+                    guard let data = data else {
+                        throw NetworkError.notResponse
+                    }
+                    
+                    let model = try JSONDecoder().decode(T.self, from: data)
+                    completion(model, nil)
+                } catch {
+                    completion(nil, error)
                 }
-                
-                // 성공은 했지만 data가 비어있을때 error
-                guard let data = data else {
-                    throw NetworkError.notResponse
-                }
-                
-                let model = try JSONDecoder().decode(T.self, from: data)
-                completion(model, nil)
-            } catch {
-                completion(nil, error)
-            }
-        }.resume()
+            }.resume()
+        }
     }
     
     private func urlComponents(apiType: APIType) -> URLComponents? {

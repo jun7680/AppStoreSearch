@@ -75,7 +75,7 @@ class RatingView: BaseView {
         
         for _ in 0..<(5 - ratingValue) {
             let startImageView = UIImageView()            
-            startImageView.image = starEmptyImage
+            startImageView.image = starEmptyImage?.resized(to: CGSize(width: 15, height: 15)).withTintColor(.gray)
             stackView.addArrangedSubview(startImageView)
         }
     }

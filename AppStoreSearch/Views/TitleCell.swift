@@ -24,6 +24,7 @@ class TitleCell: UICollectionViewCell {
     private let appTitle: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -74,10 +75,14 @@ class TitleCell: UICollectionViewCell {
             appIcon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             appIcon.heightAnchor.constraint(equalToConstant: 96),
             appIcon.widthAnchor.constraint(equalToConstant: 96),
+            
             appTitle.topAnchor.constraint(equalTo: appIcon.topAnchor),
             appTitle.leadingAnchor.constraint(equalTo: appIcon.trailingAnchor, constant: 16),
+            appTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            
             subTitle.topAnchor.constraint(equalTo: appTitle.bottomAnchor, constant: 8),
             subTitle.leadingAnchor.constraint(equalTo: appTitle.leadingAnchor),
+            
             installButton.leadingAnchor.constraint(equalTo: appTitle.leadingAnchor),
             installButton.bottomAnchor.constraint(equalTo: appIcon.bottomAnchor),
             installButton.widthAnchor.constraint(equalToConstant: 56)
