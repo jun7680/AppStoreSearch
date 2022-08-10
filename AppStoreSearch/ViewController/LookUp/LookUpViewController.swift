@@ -21,7 +21,7 @@ class LookUpViewController: UIViewController {
         collectionView.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.cellID)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
-        //        collectionView.dataSource = self
+        
         return collectionView
     }()
     
@@ -59,6 +59,7 @@ class LookUpViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         collectionView.dataSource = self
+        collectionView.delegate = self
     }
     
     // 앱 타이틀 레이아웃
@@ -72,7 +73,13 @@ class LookUpViewController: UIViewController {
             leading: 2,
             bottom: 2,
             trailing: 2)
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(0.9), heightDimension: .estimated(200)), subitems: [item])
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: .init(
+                widthDimension: .fractionalWidth(0.9),
+                heightDimension: .estimated(200)
+            ),
+            subitems: [item]
+        )
         group.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 5)
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = .init(top: 16, leading: 16, bottom: 0, trailing: 16)
@@ -82,14 +89,14 @@ class LookUpViewController: UIViewController {
     // 앱 정보 레이아웃(가로 스크롤)
     private func appInfoLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.2),
+            widthDimension: .fractionalWidth(1.5),
             heightDimension: .absolute(100)
         )
         
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.2),
+            widthDimension: .fractionalWidth(1.5),
             heightDimension: .absolute(100)
         )
         
@@ -109,13 +116,14 @@ class LookUpViewController: UIViewController {
     
     // 스크린샷 레이아웃
     private func screenShotLayout() -> NSCollectionLayoutSection {
+        let fractionWidth = 210 * CGFloat(screenShots.count)
         let item = NSCollectionLayoutItem(
-            layoutSize: .init(widthDimension: .fractionalWidth(4),
+            layoutSize: .init(widthDimension: .absolute(210),
                               heightDimension: .absolute(400))
         )
-    
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10)
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(4),
+            widthDimension: .absolute(fractionWidth),
             heightDimension: .absolute(400)
         )
         
@@ -124,7 +132,6 @@ class LookUpViewController: UIViewController {
             subitem: item,
             count: screenShots.count
         )
-        group.contentInsets = .init(top: 0, leading: 5, bottom: 0, trailing: 15)
 
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = [
@@ -137,8 +144,24 @@ class LookUpViewController: UIViewController {
                 alignment: .topLeading
             )
         ]
-        section.orthogonalScrollingBehavior = .paging
+        section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = .init(top: 0, leading: 16, bottom: 0, trailing: 16)
+        return section
+    }
+    
+    // 앱 설명
+    private func appDescriptionLayout() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(
+            layoutSize: .init(widthDimension: .fractionalWidth(1),
+                              heightDimension: .estimated(100))
+        )
+        item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: .init(widthDimension: .fractionalWidth(1),
+                              heightDimension: .estimated(100)),
+            subitems: [item]
+        )
+        let section = NSCollectionLayoutSection(group: group)
         return section
     }
     
@@ -156,20 +179,8 @@ class LookUpViewController: UIViewController {
                 return self.screenShotLayout()
                 
             default: // 앱 설명
-                let item = NSCollectionLayoutItem(
-                    layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                      heightDimension: .fractionalHeight(1))
-                )
-                item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
-                let group = NSCollectionLayoutGroup.horizontal(
-                    layoutSize: .init(widthDimension: .fractionalWidth(1),
-                                      heightDimension: .fractionalHeight(1)),
-                    subitems: [item]
-                )
-                let section = NSCollectionLayoutSection(group: group)
-                return section
+                return self.appDescriptionLayout()
             }
-            
         }
         
         return layout
@@ -224,14 +235,12 @@ extension LookUpViewController: UICollectionViewDataSource {
                 withReuseIdentifier: DescriptionCell.cellID,
                 for: indexPath
             ) as? DescriptionCell else { return .init() }
-            print("more tap", collectionView.collectionViewLayout.collectionViewContentSize)
+            
             cell.moreAction = {
                 collectionView.collectionViewLayout.invalidateLayout()
-                
-                print("more tap", collectionView.collectionViewLayout.collectionViewContentSize)
             }
-            cell.configure(item: detailData)
             
+            cell.configure(description: detailData.description)
             return cell
         default: return .init()
         }
@@ -256,3 +265,12 @@ extension LookUpViewController: UICollectionViewDataSource {
         }
     }
 }
+
+extension LookUpViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 2 {
+            self.present(ImagePreviewViewController(url: screenShots, selectIndex: indexPath.row), animated: true)
+        }
+    }
+}
+
