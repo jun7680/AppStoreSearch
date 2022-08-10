@@ -39,10 +39,16 @@ class DetailInfoCell: UICollectionViewCell {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "person.crop.square")?.withRenderingMode(.alwaysTemplate)
+        imageView.image = UIImage(systemName: "person.crop.square")
         imageView.tintColor = .gray
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }()
+    
+    private let ratingView: RatingView = {
+        let ratingView = RatingView()
+        ratingView.translatesAutoresizingMaskIntoConstraints = false
+        return ratingView
     }()
     
     override init(frame: CGRect) {
@@ -66,6 +72,7 @@ class DetailInfoCell: UICollectionViewCell {
         contentView.addSubview(centerLabel)
         contentView.addSubview(bottomLabel)
         contentView.addSubview(imageView)
+        contentView.addSubview(ratingView)
     }
     
     private func setConstraints() {
@@ -85,9 +92,11 @@ class DetailInfoCell: UICollectionViewCell {
             bottomLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             bottomLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
+            ratingView.topAnchor.constraint(equalTo: centerLabel.bottomAnchor, constant: 4),
+            ratingView.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            ratingView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
             imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-//            imageView.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 4),
-//            imageView.bottomAnchor.constraint(equalTo: bottomLabel.topAnchor, constant: -4),
             imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             imageView.widthAnchor.constraint(equalToConstant: 30),
             imageView.heightAnchor.constraint(equalToConstant: 30)
@@ -107,13 +116,17 @@ class DetailInfoCell: UICollectionViewCell {
             centerLabel.isHidden = false
             bottomLabel.isHidden = true
             imageView.isHidden = true
+            ratingView.isHidden = false
+            ratingView.ratingValue = Int(round(rating))
         case .developer:
             centerLabel.isHidden = true
             bottomLabel.isHidden = false
             imageView.isHidden = false
+            ratingView.isHidden = true
         default:
             centerLabel.isHidden = false
             bottomLabel.isHidden = false
+            ratingView.isHidden = true
             imageView.isHidden = true
         }
     }

@@ -29,7 +29,6 @@ class DescriptionCell: UICollectionViewCell {
         button.backgroundColor = .white
         button.layer.zPosition = 1
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
         return button
     }()
     
@@ -60,6 +59,8 @@ class DescriptionCell: UICollectionViewCell {
         contentView.addSubview(descriptionLabel)
         contentView.addSubview(moreButton)
         contentView.addSubview(divider)
+        
+        moreButton.addTarget(self, action: #selector(didTapMoreButton), for: .touchUpInside)
     }
     
     private func setConstraints() {
@@ -71,13 +72,15 @@ class DescriptionCell: UICollectionViewCell {
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             descriptionLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -16),
             descriptionLabel.topAnchor.constraint(equalTo: divider.topAnchor, constant: 8),
+            descriptionLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             moreButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
             moreButton.bottomAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 6)
         ])
     }
     
-    func configure(item: DetailData) {
-        descriptionLabel.text = item.description
+    func configure(description: String) {
+        descriptionLabel.text = description
+        descriptionLabel.sizeThatFits(contentView.frame.size)
     }
     
     private func addMoreButtonGradient() {
@@ -90,10 +93,10 @@ class DescriptionCell: UICollectionViewCell {
     }
     
     @objc private func didTapMoreButton() {
+        descriptionLabel.numberOfLines = 0
+        moreButton.isHidden = true
         if let moreAction = moreAction {
             moreAction()
-            descriptionLabel.numberOfLines = 0
-            moreButton.isHidden = true
         }
     }
 }
