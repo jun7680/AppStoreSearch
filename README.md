@@ -15,4 +15,7 @@
 
    - CompositionalLayout을 활용한 Section별 Layout정의
 
+   - 스크린샷 전체 탐색 및 선택시 Preview형태로 전환
+     전환시 이전 화면에서 선택된 스크린샷으로 초기화면 present
+
      
